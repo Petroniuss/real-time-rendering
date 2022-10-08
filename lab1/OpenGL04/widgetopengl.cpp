@@ -2,29 +2,30 @@
 
 #include <QDebug>
 
+const GLchar *vertexShaderSource = R""""(
+    #version 410
 
-// vertex shader
-const GLchar *vertexShaderSource =
-    "#version 410 \n"
-    "in vec3 position; "
-    "in vec3 color; "
-    "out vec3 fragcolor; "
-    "void main() "
-    "{ "
-    " gl_Position = vec4(position, 1.0); "
-    " fragcolor = color; "
-    "} ";
+    in vec3 position;
+    in vec3 color;
+    out vec3 fragcolor;
 
-// fragment shader
-const GLchar *fragmentShaderSource =
-    "#version 410 \n"
-    "in vec3 fragcolor; "
-    "out vec4 color; "
-    "void main() "
-    "{ "
-    "  color = vec4(fragcolor, 1.0); "
-    "} ";
+    void main()
+    {
+        gl_Position = vec4(position, 1.0);
+        fragcolor = color;
+    }
+)"""";
 
+const GLchar *fragmentShaderSource = R""""(
+    #version 410
+    in vec3 fragcolor;
+    out vec4 color;
+
+    void main()
+    {
+      color = vec4(fragcolor, 1.0);
+    }
+)"""";
 
 void WidgetOpenGL::initializeGL()
 {
