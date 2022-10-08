@@ -2,10 +2,11 @@
 
 #include <QDebug>
 
+// todo: we probably have to change glsl versions to something older!
 
 // vertex shader
 const GLchar *vertexShaderSource =
-    "#version 440 \n"
+    "#version 410 \n"
     "in vec3 position;"
     "void main() "
     "{ "
@@ -14,7 +15,7 @@ const GLchar *vertexShaderSource =
 
 // fragment shader
 const GLchar *fragmentShaderSource =
-    "#version 440 \n"
+    "#version 410 \n"
     "out vec3 color; "
     "void main() "
     "{ "
@@ -43,7 +44,6 @@ void WidgetOpenGL::initializeGL()
         qDebug() << (char *)glGetString(GL_RENDERER);
         qDebug() << (char *)glGetString(GL_VERSION);
         qDebug() << (char *)glGetString(GL_SHADING_LANGUAGE_VERSION);
-
 
         ////////////////////////////////////////////////////////////////
         // CZ 1. SHADERY
