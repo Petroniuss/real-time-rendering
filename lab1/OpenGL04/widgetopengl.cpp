@@ -5,7 +5,7 @@
 
 // vertex shader
 const GLchar *vertexShaderSource =
-    "#version 450 \n"
+    "#version 410 \n"
     "in vec3 position; "
     "in vec3 color; "
     "out vec3 fragcolor; "
@@ -17,7 +17,7 @@ const GLchar *vertexShaderSource =
 
 // fragment shader
 const GLchar *fragmentShaderSource =
-    "#version 450 \n"
+    "#version 410 \n"
     "in vec3 fragcolor; "
     "out vec4 color; "
     "void main() "
