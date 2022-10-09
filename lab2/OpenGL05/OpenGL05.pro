@@ -6,8 +6,6 @@
 
 QT       += core gui widgets openglwidgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
 TARGET = OpenGL05
 TEMPLATE = app
 

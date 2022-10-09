@@ -1,3 +1,4 @@
+
 #include "widgetopengl.h"
 
 #include <QDebug>
@@ -6,12 +7,12 @@
 // vertex shader
 const GLchar *vertexShaderSource =
     "#version 410 \n"
-    "in vec2 position; "
+    "in vec3 position; "
     "in vec3 color; "
     "out vec3 fragcolor; "
     "void main() "
     "{ "
-    " gl_Position = vec4(position, 0.0, 1.0); "
+    " gl_Position = vec4(position, 1.0); "
     " fragcolor = color; "
     "} ";
 
@@ -113,9 +114,9 @@ void WidgetOpenGL::initializeGL()
         // !!!
         GLfloat coordData[] =
         {
-            -0.5, -0.43,
-             0.5, -0.43,
-             0.0,  0.43,
+            -0.5, -0.43,  0.0,
+             0.5, -0.43,  0.0,
+             0.0,  0.43,  0.0
         };
 
         // !!!
@@ -155,11 +156,11 @@ void WidgetOpenGL::initializeGL()
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
 
-        // program ma teraz 2 parametry
+        // program ma 2 parametry
         glBindBuffer(GL_ARRAY_BUFFER, VBO1); // !!!
         GLint attr = glGetAttribLocation(shaderProgram, "position");
         if (attr < 0) throw QString("Nieprawidlowy parametr 'position'");
-        glVertexAttribPointer(attr, 2, GL_FLOAT, GL_FALSE, 2*sizeof(GLfloat), 0);
+        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, 3*sizeof(GLfloat), 0);
         glEnableVertexAttribArray(attr);
 
         glBindBuffer(GL_ARRAY_BUFFER, VBO2); // !!!
