@@ -92,7 +92,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model;
-        model.readFile("../Modele/dragon.obj", true, false, 0.4);
+        model.readFile("../../models-obj/dragon.obj", true, false, 0.4);
         triangles_cnt = model.getVertDataCount();
 
 
@@ -134,6 +134,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         glClearColor(0, 0.3, 0, 1);
+
         glEnable(GL_DEPTH_TEST);
 
         init_ok = true;
