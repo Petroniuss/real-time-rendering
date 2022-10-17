@@ -3,6 +3,7 @@
 
 #include <QDebug>
 #include <QFile>
+#include <QtMath>
 
 
 GLuint WidgetOpenGL::loadShader(GLenum type, QString fname)
@@ -33,6 +34,7 @@ GLuint WidgetOpenGL::loadShader(GLenum type, QString fname)
 
   return shader;
 }
+
 
 
 void WidgetOpenGL::initializeGL()
@@ -91,9 +93,9 @@ void WidgetOpenGL::initializeGL()
         // CZ 2. Wczytanie modelu
         ////////////////////////////////////////////////////////////////
 
-        Model model1;
-        model1.readFile("../../models-obj/dragon.obj", true, false, 0.4);
-        triangles_cnt = model1.getVertDataCount();
+        Model model;
+        model.readFile("../Modele/dragon.obj", true, false, 0.4);
+        triangles_cnt = model.getVertDataCount();
 
 
         ////////////////////////////////////////////////////////////////
@@ -104,7 +106,7 @@ void WidgetOpenGL::initializeGL()
         GLuint VBO;
         glGenBuffers(1, &VBO);
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, model1.getVertDataSize(), model1.getVertData(), GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, model.getVertDataSize(), model.getVertData(), GL_STATIC_DRAW);
 
         // tworzymy VAO
         glGenVertexArrays(1, &VAO);
@@ -113,50 +115,17 @@ void WidgetOpenGL::initializeGL()
         // wspolrzene wierzcholkow
         GLint attr = glGetAttribLocation(shaderProgram, "position");
         if (attr < 0) throw QString("Nieprawidlowy parametr 'position'");
-        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, model1.getVertDataStride()*sizeof(GLfloat), 0);
+        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, model.getVertDataStride()*sizeof(GLfloat), 0);
         glEnableVertexAttribArray(attr);
 
         // normalne
         attr = glGetAttribLocation(shaderProgram, "normal");
-        if (attr < 0) throw QString("Nieprawidlowy parametr 'normal'");
-        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, model1.getVertDataStride()*sizeof(GLfloat), (void *)(3*sizeof(GLfloat)));
+        if (attr < 0) throw QString("Nieprawidlowy parametr 'position'");
+        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, model.getVertDataStride()*sizeof(GLfloat), (void *)(3*sizeof(GLfloat)));
         glEnableVertexAttribArray(attr);
 
         // zapodajemy VBO
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
-
-        // odczepiamy VAO, aby sie nic juz nie zmienilo
-        glBindVertexArray(0);
-
-        // v2a
-        Model model2;
-        model2.readFile("../../models-obj/kubek.obj", true, false, 0.4);
-
-
-        // v2a
-        GLuint VBO2;
-        glGenBuffers(1, &VBO2);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO2);
-        glBufferData(GL_ARRAY_BUFFER, model2.getVertDataSize(), model2.getVertData(), GL_STATIC_DRAW);
-
-        // VAO v2
-        GLuint VAO2;
-        glGenVertexArrays(1, &VAO2);
-        glBindVertexArray(VAO2);
-
-        // wspolrzene wierzcholkow
-        attr = glGetAttribLocation(shaderProgram, "position");
-        if (attr < 0) throw QString("Nieprawidlowy parametr 'position'");
-        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, model2.getVertDataStride()*sizeof(GLfloat), 0);
-        glEnableVertexAttribArray(attr);
-
-        // normalne
-        attr = glGetAttribLocation(shaderProgram, "normal");
-        if (attr < 0) throw QString("Nieprawidlowy parametr 'normal'");
-        glVertexAttribPointer(attr, 3, GL_FLOAT, GL_FALSE, model2.getVertDataStride()*sizeof(GLfloat), (void *)(3*sizeof(GLfloat)));
-        glEnableVertexAttribArray(attr);
-
-
 
         // odczepiamy VAO, aby sie nic juz nie zmienilo
         glBindVertexArray(0);
@@ -168,11 +137,12 @@ void WidgetOpenGL::initializeGL()
 
         glClearColor(0, 0.3, 0, 1);
         glEnable(GL_DEPTH_TEST);
-
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
 
         v_transform(0, 0, 0, 1);
+
+        timer.start(1000/50, this); //!!!
 
         init_ok = true;
     }
@@ -192,39 +162,24 @@ void WidgetOpenGL::paintGL()
         // czyscimy ekran i bufor glebokosci
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        VAO = 1;
-        glBindVertexArray(VAO);
-
         // rysujemy
         glUseProgram(shaderProgram);
+        glBindVertexArray(VAO);
 
         // macierz
         int attr = glGetUniformLocation(shaderProgram, "pvm_matrix");
         if (attr < 0) throw QString("Nieprawidlowy parametr 'pvm_matrix'");
 
-        // !!!
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 10; i++)
         {
             m_matrix.setToIdentity();
-            m_matrix.rotate(72*i, 0, 1, 0);
+            m_matrix.rotate(36*i + walk_angle, 0, 1, 0); //!!!
             m_matrix.translate(0, 0, -2);
             m_matrix.scale(0.5);
 
-            QMatrix4x4 pvm_matrix = p_matrix*v_matrix*m_matrix;
-            glUniformMatrix4fv(attr, 1, GL_FALSE, pvm_matrix.data());
-
-            glDrawArrays(GL_TRIANGLES, 0, 3*triangles_cnt);
-        }
-
-        VAO = 2;
-        glBindVertexArray(VAO);
-
-        for (int i = 5; i < 10; i++)
-        {
-            m_matrix.setToIdentity();
-            m_matrix.rotate(36 + 72*i, 0, 1, 0);
-            m_matrix.translate(0, 0, -2);
-            m_matrix.scale(0.5);
+            // !!!
+            float s = qSin(3.1415926*(10*(walk_angle+10*i))/180.0)*0.2 + 1;
+            m_matrix.scale(s, 1/s, 1);
 
             QMatrix4x4 pvm_matrix = p_matrix*v_matrix*m_matrix;
             glUniformMatrix4fv(attr, 1, GL_FALSE, pvm_matrix.data());
@@ -234,7 +189,7 @@ void WidgetOpenGL::paintGL()
 
         // odczepiamy VAO
         glBindVertexArray(0);
-    }
+        }
     catch (QString msg)
     {
         qDebug() << "BLAD w paintGL():" << msg;
@@ -249,10 +204,17 @@ void WidgetOpenGL::resizeGL(int w, int h)
 
     // macierz perspektywy...
     // p_matrix.ortho(-r, r, -1, 1, 0.1, 7);
-    p_matrix.perspective(45, r, 0.1, 100); // !!!
+    p_matrix.perspective(45, r, 0.1, 100);
     p_matrix.translate(0, 0, -5);
 }
 
+
+// !!!
+void WidgetOpenGL::timerEvent(QTimerEvent *)
+{
+    walk_angle = (walk_angle + 1)%360;
+    repaint();
+}
 
 
 void WidgetOpenGL::v_transform(float rot_x, float rot_y, float rot_z, float zoom)
@@ -263,5 +225,5 @@ void WidgetOpenGL::v_transform(float rot_x, float rot_y, float rot_z, float zoom
     v_matrix.rotate(rot_z, 0, 0, 1);
     v_matrix.scale(zoom);
 
-    repaint();
+//    repaint();
 }

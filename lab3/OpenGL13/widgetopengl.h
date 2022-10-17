@@ -2,13 +2,15 @@
 #define WIDGETOPENGL_H
 
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_4_1_Core>
+#include <QOpenGLFunctions_1_0>
+#include <QOpenGLFunctions_4_5_Core>
 #include <QMatrix4x4>
+#include <QBasicTimer>
 
-#define MIN_OPENGL_VERSION "4.1"
+#define MIN_OPENGL_VERSION "4.5"
 
 
-class OpenGLVersionTest: public QOpenGLFunctions_4_1_Core
+class OpenGLVersionTest: public QOpenGLFunctions_1_0
 {
 public:
     QString version()
@@ -19,7 +21,7 @@ public:
 };
 
 
-class WidgetOpenGL: public QOpenGLWidget, public QOpenGLFunctions_4_1_Core
+class WidgetOpenGL: public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
 {
 public:
     WidgetOpenGL(QWidget *parent = 0): QOpenGLWidget(parent){}
@@ -29,19 +31,20 @@ public:
 protected:
     bool init_ok;
     int triangles_cnt;
+    QBasicTimer timer; // !!!
+    int walk_angle;
 
     QMatrix4x4 m_matrix, v_matrix, p_matrix;
 
     GLuint shaderProgram;
     GLuint VAO;
-    GLuint currentVBO;
-    GLuint nextVBO;
 
     GLuint loadShader(GLenum type, QString fname);
 
     void initializeGL();
     void paintGL();
-    void resizeGL(int w, int h);  // !!!
+    void resizeGL(int w, int h);
+    void timerEvent(QTimerEvent *); // !!!
 };
 
 #endif // WIDGETOPENGL_H
