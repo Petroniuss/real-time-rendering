@@ -2,14 +2,13 @@
 #define WIDGETOPENGL_H
 
 #include <QOpenGLWidget>
-#include <QOpenGLFunctions_1_0>
-#include <QOpenGLFunctions_4_5_Core>
+#include <QOpenGLFunctions_4_1_Core>
 #include <QMatrix4x4>
 
-#define MIN_OPENGL_VERSION "4.5"
+#define MIN_OPENGL_VERSION "4.1"
 
 
-class OpenGLVersionTest: public QOpenGLFunctions_1_0
+class OpenGLVersionTest: public QOpenGLFunctions_4_1_Core
 {
 public:
     QString version()
@@ -20,7 +19,7 @@ public:
 };
 
 
-class WidgetOpenGL: public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
+class WidgetOpenGL: public QOpenGLWidget, public QOpenGLFunctions_4_1_Core
 {
 public:
     WidgetOpenGL(QWidget *parent = 0): QOpenGLWidget(parent){}
