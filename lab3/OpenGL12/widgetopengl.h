@@ -29,13 +29,14 @@ public:
 protected:
     bool init_ok;
     int triangles_cnt;
+    int triangles_cnt2;
 
     QMatrix4x4 m_matrix, v_matrix, p_matrix;
 
     GLuint shaderProgram;
+
     GLuint VAO;
-    GLuint currentVBO;
-    GLuint nextVBO;
+    GLuint VAO2;
 
     GLuint loadShader(GLenum type, QString fname);
 

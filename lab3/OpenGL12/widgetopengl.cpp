@@ -131,6 +131,7 @@ void WidgetOpenGL::initializeGL()
         // v2a
         Model model2;
         model2.readFile("../../models-obj/kubek.obj", true, false, 0.4);
+        triangles_cnt2 = model2.getVertDataCount();
 
 
         // v2a
@@ -140,7 +141,6 @@ void WidgetOpenGL::initializeGL()
         glBufferData(GL_ARRAY_BUFFER, model2.getVertDataSize(), model2.getVertData(), GL_STATIC_DRAW);
 
         // VAO v2
-        GLuint VAO2;
         glGenVertexArrays(1, &VAO2);
         glBindVertexArray(VAO2);
 
@@ -192,7 +192,6 @@ void WidgetOpenGL::paintGL()
         // czyscimy ekran i bufor glebokosci
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        VAO = 1;
         glBindVertexArray(VAO);
 
         // rysujemy
@@ -216,8 +215,7 @@ void WidgetOpenGL::paintGL()
             glDrawArrays(GL_TRIANGLES, 0, 3*triangles_cnt);
         }
 
-        VAO = 2;
-        glBindVertexArray(VAO);
+        glBindVertexArray(VAO2);
 
         for (int i = 5; i < 10; i++)
         {
@@ -229,7 +227,7 @@ void WidgetOpenGL::paintGL()
             QMatrix4x4 pvm_matrix = p_matrix*v_matrix*m_matrix;
             glUniformMatrix4fv(attr, 1, GL_FALSE, pvm_matrix.data());
 
-            glDrawArrays(GL_TRIANGLES, 0, 3*triangles_cnt);
+            glDrawArrays(GL_TRIANGLES, 0, 3*triangles_cnt2);
         }
 
         // odczepiamy VAO
