@@ -13,10 +13,31 @@ public:
 
     void readFile(QString fname, bool readNormals, bool readTextures, float scale);
 
-    float *getVertData() { return vertData; }
+    float *getVertData() {
+        return vertData;
+    }
+
     int getVertDataStride() { return stride; }
-    int getVertDataCount() { return f_cnt; }
-    int getVertDataSize() { return 3*f_cnt*stride*sizeof(float); }
+
+    int getVertDataCount() {
+        return f_cnt * stride * 10;
+    }
+
+    int getVertDataSize() {
+        return getVertDataCount() * sizeof(float);
+    }
+
+    int* getEBOIndices() {
+        return ebo_indices;
+    }
+
+    int getEBOIndicesCount() {
+        return 3 * f_cnt;
+    }
+
+    int getEBOIndicesSize() {
+        return getEBOIndicesCount() * sizeof(int);
+    }
 
 private:
     QStringList source;
@@ -24,6 +45,8 @@ private:
     bool read_normals, read_textures;
     float *vertData;
     float *v, *vn, *vt;
+
+    int* ebo_indices;
 
     void count_items();
     void alloc_items();

@@ -106,6 +106,13 @@ void WidgetOpenGL::initializeGL()
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, model.getVertDataSize(), model.getVertData(), GL_STATIC_DRAW);
 
+        // EBO!
+        GLuint EBO;
+        glGenBuffers(1, &EBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.getEBOIndicesSize(), model.getEBOIndices(), GL_STATIC_DRAW);
+
+
         // tworzymy VAO
         glGenVertexArrays(1, &VAO);
         glBindVertexArray(VAO);
@@ -126,6 +133,9 @@ void WidgetOpenGL::initializeGL()
 
         // zapodajemy VBO
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
+
+        // EBO!
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
 
         // odczepiamy VAO, aby sie nic juz nie zmienilo
         glBindVertexArray(0);
