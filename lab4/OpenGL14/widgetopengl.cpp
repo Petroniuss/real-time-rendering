@@ -105,16 +105,11 @@ void WidgetOpenGL::initializeGL()
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, model.getVertDataSize(), model.getVertData(), GL_STATIC_DRAW);
 
-        qDebug() << QString("VBO: vertDataSize %1").arg(model.getVertDataSize());
-
         // EBO!
         GLuint EBO;
         glGenBuffers(1, &EBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.getEBOIndicesSize(), model.getEBOIndices(), GL_STATIC_DRAW);
-
-        qDebug() << QString("EBO: EBOIndicesSize %1").arg(model.getEBOIndicesSize());
-
 
         // tworzymy VAO
         glGenVertexArrays(1, &VAO);
