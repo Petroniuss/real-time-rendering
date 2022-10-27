@@ -92,7 +92,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model;
-        model.readFile("../Modele/dragon.obj", true, false, 0.5);
+        model.readFile("../../models-obj/dragon.obj", true, false, 0.5);
         triangles_cnt = model.getVertDataCount();
 
 
@@ -138,7 +138,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model_light;
-        model_light.readFile("../Modele/sphere.obj", true, false, 0.4);
+        model_light.readFile("../../models-obj/sphere.obj", true, false, 0.4);
         triangles_light_cnt = model_light.getVertDataCount();
 
 
@@ -255,10 +255,18 @@ void WidgetOpenGL::paintGL()
 
         // material...
         // !!!
-        Material material(0.24725f,  0.1995f,   0.0745f,     0.2f, // ambient
-                          0.75164f,  0.60648f,  0.22648f,    1.0f, // diffuse
-                          0.628281f, 0.555802f, 0.366065f,   1.0f, // specular
-                          0.4f*128.0f);
+//        Material material(0.24725f,  0.1995f,   0.0745f,     0.2f, // ambient
+//                          0.75164f,  0.60648f,  0.22648f,    1.0f, // diffuse
+//                          0.628281f, 0.555802f, 0.366065f,   1.0f, // specular
+//                          0.4f*128.0f);
+
+        // ruby
+        Material material(
+            0.1745f,	0.01175f,	0.01175f,	0.3f,
+            0.61424f,	0.04136,	0.04136f, 1.0f,
+            0.727811f,	0.626959f,	0.626959f, 0.5f,
+            0.6f
+        );
 
         int attr_material = glGetUniformLocation(shaderProgram, "material.ambient");
         if (attr_material < 0) throw QString("Nieprawidlowy parametr 'material.ambient'");
