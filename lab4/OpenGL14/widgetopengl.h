@@ -1,6 +1,8 @@
 #ifndef WIDGETOPENGL_H
 #define WIDGETOPENGL_H
 
+#include "model.h"
+
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_1_0>
 #include <QOpenGLFunctions_4_1_Core>
@@ -35,6 +37,7 @@ protected:
 
     GLuint shaderProgram;
     GLuint VAO;
+    Model model;
 
     GLuint loadShader(GLenum type, QString fname);
     QMatrix3x3 invertTranspose(const QMatrix4x4 &A); // !!!

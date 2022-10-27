@@ -1,6 +1,7 @@
 #ifndef MODEL_H
 #define MODEL_H
 
+#include "OpenGL/gltypes.h"
 #include <QString>
 #include <QStringList>
 
@@ -20,14 +21,14 @@ public:
     int getVertDataStride() { return stride; }
 
     int getVertDataCount() {
-        return f_cnt * stride * 10;
+        return deduplicated_vert_data_count;
     }
 
     int getVertDataSize() {
         return getVertDataCount() * sizeof(float);
     }
 
-    int* getEBOIndices() {
+    GLuint* getEBOIndices() {
         return ebo_indices;
     }
 
@@ -36,7 +37,7 @@ public:
     }
 
     int getEBOIndicesSize() {
-        return getEBOIndicesCount() * sizeof(int);
+        return getEBOIndicesCount() * sizeof(GLuint);
     }
 
 private:
@@ -46,7 +47,8 @@ private:
     float *vertData;
     float *v, *vn, *vt;
 
-    int* ebo_indices;
+    GLuint* ebo_indices;
+    int deduplicated_vert_data_count;
 
     void count_items();
     void alloc_items();

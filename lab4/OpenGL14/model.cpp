@@ -69,8 +69,8 @@ void Model::alloc_items()
 
     stride = 3 + 3*int(read_normals) + 2*int(read_textures);
 
-    vertData = new float[this -> getVertDataCount()];
-    ebo_indices = new int[this -> getEBOIndicesCount()];
+    vertData = new float[3 * f_cnt * stride];
+    ebo_indices = new GLuint[this -> getEBOIndicesCount()];
 }
 
 
@@ -150,7 +150,6 @@ void Model::parse_items(float scale)
             {
                 auto key = sl[j].toStdString();
                 auto it = m.find(key);
-//                qDebug() << sl[j];
                 if (it == m.end()) {
                     sl2 = sl[j].split("/");
                     while (sl2.count() < 3)
@@ -179,9 +178,9 @@ void Model::parse_items(float scale)
 
                     ebo_indices[ebo_p] = stride * p;
 
-                    // why doesn't it work?
+                    // this only makes things worse
+                    // with this line everything should be correctly deduplicated
 //                    m[key] = stride * p;
-
                     p++;
                 } else {
                     ebo_indices[ebo_p] = it->second;
@@ -191,6 +190,12 @@ void Model::parse_items(float scale)
             }
         }
    }
+
+   // this is wrong, why?
+   this->deduplicated_vert_data_count = (p - 1) * stride;
+   qDebug() << "deduplicated_vert_data_count:" << this->deduplicated_vert_data_count;
+   qDebug() << "p:" << p;
+   qDebug() << "ebo_p:" << ebo_p;
 
    delete [] v;
    delete [] vn;

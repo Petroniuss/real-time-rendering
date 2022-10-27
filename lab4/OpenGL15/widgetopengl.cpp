@@ -92,7 +92,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model;
-        model.readFile("../Modele/dragon.obj", true, false, 0.5);
+        model.readFile("../../models-obj/dragon.obj", true, false, 0.5);
         triangles_cnt = model.getVertDataCount();
 
 
@@ -138,7 +138,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model_light;
-        model_light.readFile("../Modele/sphere.obj", true, false, 0.4);
+        model_light.readFile("../../models-obj/sphere.obj", true, false, 0.4);
         triangles_light_cnt = model_light.getVertDataCount();
 
 

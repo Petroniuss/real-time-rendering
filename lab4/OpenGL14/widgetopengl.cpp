@@ -91,9 +91,8 @@ void WidgetOpenGL::initializeGL()
         // CZ 2. Wczytanie modelu
         ////////////////////////////////////////////////////////////////
 
-        Model model;
         model.readFile("../../models-obj/dragon.obj", true, false, 0.4);
-        triangles_cnt = model.getVertDataCount();
+        triangles_cnt = model.getEBOIndicesCount() / 3;
 
 
         ////////////////////////////////////////////////////////////////
@@ -218,7 +217,7 @@ void WidgetOpenGL::paintGL()
             QMatrix3x3 norm_matrix = invertTranspose(m_matrix); // !!!
             glUniformMatrix3fv(attr_n, 1, GL_FALSE, norm_matrix.data());
 
-            glDrawArrays(GL_TRIANGLES, 0, 3*triangles_cnt);
+            glDrawElements(GL_TRIANGLES,  model.getEBOIndicesCount(), GL_UNSIGNED_INT, (void*) (0));
         }
 
         // odczepiamy VAO

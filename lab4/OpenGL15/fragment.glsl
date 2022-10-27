@@ -1,4 +1,4 @@
-#version 450
+#version 410
 
 in vec3 fragNormal;
 in vec3 fragPos;
@@ -9,7 +9,7 @@ out vec4 color;
 
 void main()
 {
-    vec3 modelColor = vec3(0.0, 1.0, 0.2);
+    vec3 modelColor = vec3(1.0, 0.0, 0.0);
     vec3 lightPos   = vec3(1.0, 3.0, 0.0);
     vec3 lightColor = vec3(1.0, 1.0, 1.0);
 
