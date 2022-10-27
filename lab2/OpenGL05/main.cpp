@@ -9,7 +9,6 @@ int main(int argc, char *argv[])
     QApplication::setAttribute(Qt::AA_UseDesktopOpenGL);
     QApplication a(argc, argv);
 
-    // necessary on macos monterey 12.6
     QSurfaceFormat format;
     format.setDepthBufferSize(24);
     format.setStencilBufferSize(8);
