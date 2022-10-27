@@ -130,12 +130,6 @@ void Model::parse_items(float scale)
     }
 
    // trojkaty...
-   // let's add ebo indices one by one.
-   // we only need to hash the combination (vi, vni, vti) well that
-   // depends because we might want to read normals and textures or not.
-   // so the easiest solution would be to concatenate
-   // these numbers into a single stirng.
-   // and have a hashmap that points to correct index of vertData where the data is stored.
    std::unordered_map<std::string, int> m;
    p = 0;
    int ebo_p = 0;
@@ -176,11 +170,9 @@ void Model::parse_items(float scale)
                         vertData[stride*p + 3*int(read_normals) + 4] = vt[2*vti + 1];
                     }
 
-                    ebo_indices[ebo_p] = stride * p;
+                    ebo_indices[ebo_p] = p;
+                    m[key] = p;
 
-                    // this only makes things worse
-                    // with this line everything should be correctly deduplicated
-//                    m[key] = stride * p;
                     p++;
                 } else {
                     ebo_indices[ebo_p] = it->second;
@@ -191,8 +183,8 @@ void Model::parse_items(float scale)
         }
    }
 
-   // this is wrong, why?
    this->deduplicated_vert_data_count = (p - 1) * stride;
+
    qDebug() << "deduplicated_vert_data_count:" << this->deduplicated_vert_data_count;
    qDebug() << "p:" << p;
    qDebug() << "ebo_p:" << ebo_p;

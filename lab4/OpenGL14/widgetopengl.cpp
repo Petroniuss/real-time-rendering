@@ -105,11 +105,15 @@ void WidgetOpenGL::initializeGL()
         glBindBuffer(GL_ARRAY_BUFFER, VBO);
         glBufferData(GL_ARRAY_BUFFER, model.getVertDataSize(), model.getVertData(), GL_STATIC_DRAW);
 
+        qDebug() << QString("VBO: vertDataSize %1").arg(model.getVertDataSize());
+
         // EBO!
         GLuint EBO;
         glGenBuffers(1, &EBO);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, model.getEBOIndicesSize(), model.getEBOIndices(), GL_STATIC_DRAW);
+
+        qDebug() << QString("EBO: EBOIndicesSize %1").arg(model.getEBOIndicesSize());
 
 
         // tworzymy VAO
@@ -144,7 +148,7 @@ void WidgetOpenGL::initializeGL()
         // CZ 4. Inne inicjalizacje OpenGL
         ////////////////////////////////////////////////////////////////
 
-        glClearColor(0, 0.3, 0, 1);
+        glClearColor(0.1, 0.1, 0.1, 1);
         glEnable(GL_DEPTH_TEST);
         glEnable(GL_CULL_FACE);
         glCullFace(GL_BACK);
