@@ -1,6 +1,8 @@
 *.DS_STORE
 
 *.obj
+*.zip
+**/.qtc_clangd
 
 
 IntelliJ IDEA
