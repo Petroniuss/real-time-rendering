@@ -31,6 +31,8 @@ uniform sampler2D textureNormal;
 uniform sampler2D textureDepth;
 
 uniform int slider;
+uniform float paralaxHeightSlider;
+uniform float maxLayersSlider;
 
 out vec4 color;
 
@@ -47,9 +49,11 @@ vec2 ParallaxMapping(vec2 texCoor, vec3 viewDir)
 
 vec2 ParallaxMapping_Steep(vec2 texCoords, vec3 viewDir)
 {
-    const float height_scale = 2.0/128.0;
+
+     const float height_scale = 2.0/128.0;
 
     const float minLayers = 2;
+    // todo: :)
     const float maxLayers = 10;
 
     float numLayers = mix(maxLayers, minLayers, abs(dot(vec3(0.0, 0.0, 1.0), viewDir)));
@@ -75,12 +79,15 @@ vec2 ParallaxMapping_Steep(vec2 texCoords, vec3 viewDir)
 }
 
 
-vec2 ParallaxMapping_Steep2(vec2 texCoords, vec3 viewDir)
+vec2 ParallaxMapping_Steep2(vec2 texCoords, vec3 viewDir, float paralaxHeightSlider, float maxLayers)
 {
-    const float height_scale = 2.0/128.0;
+
+//    const float height_scale = 2.0/128.0;
+    float height_scale = paralaxHeightSlider / 128.0;
 
     const float minLayers = 2;
-    const float maxLayers = 10;
+    // maxLayers.
+//    const float maxLayers = 10;
 
     float numLayers = mix(maxLayers, minLayers, abs(dot(vec3(0.0, 0.0, 1.0), viewDir)));
     float layerDepth = 1.0 / numLayers;
@@ -121,7 +128,7 @@ void main()
       texCoor = fragTexCoor;
       // texCoor = ParallaxMapping_Steep(fragTexCoor, viewDir);
     else
-      texCoor = ParallaxMapping_Steep2(fragTexCoor, viewDir);
+      texCoor = ParallaxMapping_Steep2(fragTexCoor, viewDir, paralaxHeightSlider, maxLayersSlider);
 
     if (texCoor.x < 0 || texCoor.x > 1 || texCoor.y < 0 || texCoor.y > 1)
         discard;

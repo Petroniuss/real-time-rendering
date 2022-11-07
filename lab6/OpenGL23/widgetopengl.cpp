@@ -345,6 +345,14 @@ void WidgetOpenGL::paintGL()
         int attr_s = getUniformLocation(shaderProgram, "slider");
         glUniform1i(attr_s, slider);
 
+        // paralax_height_slider
+        int attr_paralax_height_slider = getUniformLocation(shaderProgram, "paralaxHeightSlider");
+        glUniform1f(attr_paralax_height_slider, paralax_height_slider);
+
+        // paralax_height_slider
+        int attr_maxLayersSlider = getUniformLocation(shaderProgram, "maxLayersSlider");
+        glUniform1f(attr_maxLayersSlider, max_layers_slider);
+
         // material...
         Material material(0.2,      0.2,      0.2,        1.0, // ambient
                           1.0,      1.0,      1.0,        1.0, // diffuse
@@ -447,6 +455,18 @@ void WidgetOpenGL::move_light(float x, float y, float z)
 void WidgetOpenGL::move_slider(int _slider)
 {
     slider = _slider;
+
+    repaint();
+}
+
+void WidgetOpenGL::move_horizontal_paralax_slider(float _slider) {
+    paralax_height_slider = _slider;
+
+    repaint();
+}
+
+void WidgetOpenGL::move_max_layers_slider(float _slider) {
+    max_layers_slider = _slider;
 
     repaint();
 }

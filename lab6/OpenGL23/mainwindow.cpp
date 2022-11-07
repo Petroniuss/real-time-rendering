@@ -72,3 +72,13 @@ void MainWindow::on_horizontalSlider_Slider_valueChanged(int value)
 {
     ui->widgetOpenGL->move_slider(ui->widgetOpenGL->width()*value/10000);
 }
+
+void MainWindow::on_horizontal_paralax_slider_valueChanged(int value)
+{
+    ui->widgetOpenGL->move_horizontal_paralax_slider((float) value / 100.0);
+}
+
+void MainWindow::on_horizontal_max_layers_slider_valueChanged(int value)
+{
+    ui->widgetOpenGL->move_horizontal_paralax_slider((float) value);
+}

@@ -32,6 +32,8 @@ public:
     void v_transform(float rot_x, float rot_y, float rot_z, float zoom);
     void move_light(float x, float y, float z);
     void move_slider(int _slider);
+    void move_horizontal_paralax_slider(float _slider);
+    void move_max_layers_slider(float _slider);
 
 protected:
     bool init_ok;
@@ -39,6 +41,8 @@ protected:
 
     QMatrix4x4 m_matrix, v_matrix, p_matrix;
     int slider;
+    float paralax_height_slider;
+    float max_layers_slider;
 
     Light light;
 

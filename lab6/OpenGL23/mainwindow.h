@@ -26,6 +26,8 @@ private slots:
     void on_verticalSliderLightZ_valueChanged(int);
 
     void on_horizontalSlider_Slider_valueChanged(int value);
+    void on_horizontal_paralax_slider_valueChanged(int value);
+    void on_horizontal_max_layers_slider_valueChanged(int value);
 
 private:
     Ui::MainWindow *ui;
