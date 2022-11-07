@@ -53,6 +53,9 @@ void main()
     vec3 reflDir = reflect(-lightDir, texNormal);
     vec3 specular = pow(max(dot(viewDir, reflDir), 0.0), material.shininess + 1)*light.color*material.specular;
 
+    // dot product between normal and light direction.
+    // if fragment normal and light direction are close to being perpendicular
+    // we decrease 'diffuse' and 'specular' parameters
     float v = max(dot(fragTBN[2], lightDir), 0.0);
     if (v < 0.1)
     {

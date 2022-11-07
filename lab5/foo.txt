@@ -1,0 +1,2 @@
+Warunek jest spełniony gdy kierunek światła jest prawie prostopadły z normalną fragmentu (lub gdy światło pada zza powierzchni - wtedy v = 0) .
+Gdy warunek jest spełniony parametry diffuse i specular są odpowiednio zmniejszane, które wpływają na rozproszenie światła. Są zmniejszane bo dot(fragTBN[2], lightDir) ma zawsze wartość mniejszą od 1.0.
