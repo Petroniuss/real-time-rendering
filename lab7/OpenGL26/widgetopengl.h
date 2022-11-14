@@ -32,6 +32,7 @@ public:
     void v_transform(float rot_x, float rot_y, float rot_z, float zoom);
     void move_light(float x, float y, float z);
     void move_slider(int _slider);
+    void move_horizontal_refraction_slider(float _refractive_index);
 
 protected:
     bool init_ok;
@@ -39,6 +40,7 @@ protected:
 
     QMatrix4x4 m_matrix, v_matrix, p_matrix;
     int slider;
+    float refractive_index = 1.0;
 
     Light light;
 

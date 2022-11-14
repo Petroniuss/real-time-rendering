@@ -22,12 +22,15 @@ uniform Light light;
 uniform Material material;
 uniform samplerCube textureSkybox;
 uniform int slider;
+uniform float refractionIndex;
 
 out vec4 color;
 
 void main()
 {
-  float ratio = 1.0 / 1.52;
+//  this is it!
+//  float ratio = 1.0 / 1.52;
+  float ratio = 1.0 / refractionIndex;
   vec3 I = normalize(fragPos.xyz - eyePos);
   vec3 R = refract(I, normalize(fragNormal), ratio);
 

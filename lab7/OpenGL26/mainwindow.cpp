@@ -72,3 +72,11 @@ void MainWindow::on_horizontalSlider_Slider_valueChanged(int value)
 {
     ui->widgetOpenGL->move_slider(ui->widgetOpenGL->width()*value/10000);
 }
+
+void MainWindow::on_horizontal_refraction_slider_valueChanged(int value)
+{
+    float refractive_index = 1.0 + (((float) value / 10000) * 4.0);
+    ui->widgetOpenGL->move_horizontal_refraction_slider(refractive_index);
+}
+
+

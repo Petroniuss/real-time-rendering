@@ -365,6 +365,10 @@ void WidgetOpenGL::paintGL()
         int attr_s = getUniformLocation(shaderProgram, "slider");
         glUniform1i(attr_s, slider);
 
+        // refraction
+        int attr_refraction = getUniformLocation(shaderProgram, "refractionIndex");
+        glUniform1f(attr_refraction, refractive_index);
+
         // swiatlo
         int attr_light = getUniformLocation(shaderProgram, "light.pos");
         glUniform3fv(attr_light, 1, light.pos);
@@ -489,6 +493,12 @@ void WidgetOpenGL::move_light(float x, float y, float z)
 void WidgetOpenGL::move_slider(int _slider)
 {
     slider = _slider;
+
+    repaint();
+}
+
+void WidgetOpenGL::move_horizontal_refraction_slider(float _refractive_index) {
+    refractive_index = _refractive_index;
 
     repaint();
 }
