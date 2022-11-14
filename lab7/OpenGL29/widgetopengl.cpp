@@ -196,19 +196,19 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model;
-        model.readFile("../Modele/" MODEL, true, true, 0.8);
+        model.readFile("../../models-obj/" MODEL, true, true, 0.8);
         triangles_cnt = model.getVertDataCount();
 
         Model model_floor;
-        model_floor.readFile("../Modele/" MODEL_FLOOR, true, true, 0.8);
+        model_floor.readFile("../../models-obj/" MODEL_FLOOR, true, true, 0.8);
         triangles_floor_cnt = model_floor.getVertDataCount();
 
         ////////////////////////////////////////////////////////////////
         // CZ 2T. Wczytanie tekstur
         ////////////////////////////////////////////////////////////////
 
-        TEX = loadTexture2D("../Modele/" TEXTURE);
-        TEX_floor = loadTexture2D("../Modele/" TEXTURE_FLOOR);
+        TEX = loadTexture2D("../../Modele/" TEXTURE);
+        TEX_floor = loadTexture2D("../../Modele/" TEXTURE_FLOOR);
 
 
         ////////////////////////////////////////////////////////////////
@@ -364,7 +364,7 @@ void WidgetOpenGL::paintGL()
 }
 
 
-void WidgetOpenGL::paintScene(boolean gen_shadow_map)
+void WidgetOpenGL::paintScene(GLboolean gen_shadow_map)
 {
     GLuint prog = gen_shadow_map ? shaderProgramShadow : shaderProgram;
 
