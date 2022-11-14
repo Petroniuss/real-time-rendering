@@ -73,6 +73,10 @@ void MainWindow::on_horizontalSlider_Slider_valueChanged(int value)
     ui->widgetOpenGL->move_slider(ui->widgetOpenGL->width()*value/10000);
 }
 
+void MainWindow::on_horizontal_slider_shadow(int value) {
+
+}
+
 void MainWindow::on_pushButton_clicked()
 {
     ui->widgetOpenGL->readTexture();

@@ -25,6 +25,7 @@ private slots:
     void on_verticalSliderLightY_valueChanged(int);
     void on_verticalSliderLightZ_valueChanged(int);
     void on_horizontalSlider_Slider_valueChanged(int value);
+    void on_horizontal_slider_shadow(int value);
     void on_pushButton_clicked();
 
 private:
