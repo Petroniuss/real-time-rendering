@@ -190,14 +190,14 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model;
-        model.readFile("../Modele/" MODEL ".obj", true, false, false, 0.5);
+        model.readFile("../../models-obj/" MODEL ".obj", true, false, false, 0.5);
         triangles_cnt = model.getVertDataCount();
 
         ////////////////////////////////////////////////////////////////
         // CZ 2T. Wczytanie tekstur
         ////////////////////////////////////////////////////////////////
 
-        tex_skybox = loadTextureCube("../Modele/" TEXTURE_SKYBOX,  ".jpg");
+        tex_skybox = loadTextureCube("../../Modele/" TEXTURE_SKYBOX,  ".jpg");
 
 
         ////////////////////////////////////////////////////////////////
@@ -236,7 +236,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model_light;
-        model_light.readFile("../Modele/sphere.obj", true, false, false, 0.4);
+        model_light.readFile("../../models-obj/sphere.obj", true, false, false, 0.4);
         triangles_light_cnt = model_light.getVertDataCount();
 
         light.setPos(1.0, 3.0, 0.0);
@@ -271,7 +271,7 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model_skybox;
-        model_skybox.readFile("../Modele/skybox.obj", false, false, false, 1.0);
+        model_skybox.readFile("../../models-obj/skybox.obj", false, false, false, 1.0);
         triangles_skybox_cnt = model_skybox.getVertDataCount();
 
         // tworzymy VBO i przesylamy dane do serwera OpenGL
