@@ -1,7 +1,7 @@
 #version 410
 
 layout (triangles) in;
-layout (line_strip, max_vertices=6) out;
+layout (triangle_strip, max_vertices=6) out;
 
 in vec3 geoNormal[];
 in vec4 geoPos[];
@@ -22,7 +22,7 @@ void main()
 {
   // trojkat
 
-  useColor = 0;
+  useColor = 1;
   fragNormal = geoNormal[0];
   fragPos = geoPos[0];
   gl_Position = gl_in[0].gl_Position;
