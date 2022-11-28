@@ -589,6 +589,20 @@ void WidgetOpenGL::paintHDR()
 }
 
 
+int factorial(int n, int k) {
+    int result = 1;
+    for (int i = k + 1; i <= n; i++) {
+        result *= i;
+    }
+
+    for (int i = 2; i <= (n - k); i++) {
+        result /= i;
+    }
+
+    return result;
+}
+
+
 void WidgetOpenGL::paintFilter(GLuint textureIn, GLboolean horizontal)
 {
     // czyscimy ekran i bufor glebokosci
@@ -605,6 +619,44 @@ void WidgetOpenGL::paintFilter(GLuint textureIn, GLboolean horizontal)
 
     int attr_horizontal = getUniformLocation(shaderProgram_Filter, "horizontal");
     glUniform1f(attr_horizontal, horizontal ? 1.0 : 0.0);
+
+    GLint w_size = 5;
+    int attr_w_size = getUniformLocation(shaderProgram_Filter, "w_size");
+    glUniform1i(attr_w_size, w_size);
+
+
+    int R = 6;
+    int n = 12;
+
+    int row[n + 1];
+    for (int i = 0; i <= n; i++) {
+        int k = i;
+        row[i] = factorial(n, k);
+    }
+
+    int middle = n / 2;
+    int sum = row[middle];
+    for (int i = 1; i <= R; i++) {
+        sum += row[middle - i];
+        sum += row[middle + i];
+    }
+
+    GLfloat w[R + 1];
+    qDebug() << "w[i] ";
+    for (int i = 0; i <= R; i++) {
+        w[i] = ((float) row[middle - i]) / ((float) sum);
+        qDebug() << w[i] << " ";
+    }
+    qDebug() << "\n";
+
+//    w[0] = 0.227027;
+//    w[1] = 0.1945946;
+//    w[2] = 0.1216216;
+//    w[3] = 0.054054;
+//    w[4] = 0.016216;
+
+    int attr_w = getUniformLocation(shaderProgram_Filter, "horizontal");
+    glUniform1fv(glGetUniformLocation(shaderProgram_Filter, "w"), 5, w);
 
     glDrawArrays(GL_TRIANGLES, 0, 6);
 
