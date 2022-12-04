@@ -21,6 +21,7 @@ in vec2 fragTexCoor;
 
 uniform vec3 eyePos;
 uniform Light light;
+// idea add a second light and it might just work :p
 uniform float far;
 uniform Material material;
 
@@ -32,6 +33,7 @@ uniform int slider;
 out vec4 color;
 
 
+// new shadow.
 float inShadowPCF()
 {
     if (int(gl_FragCoord.x) < slider)
@@ -58,8 +60,7 @@ float inShadowPCF()
 }
 
 
-
-
+// old shadow
 float inShadowPCF2()
 {
     vec3 sample_dir[] = vec3[]
@@ -114,6 +115,6 @@ void main()
     vec3 reflDir = reflect(-lightDir, normal);
     vec3 specular = specular_strength*pow(max(dot(viewDir, reflDir), 0.0), material.shininess)*light.color*material.specular;
 
-    float shadow = inShadowPCF2();
+    float shadow = inShadowPCF() + inShadowPCF2();
     color = vec4(ambient + shadow*(diffuse + specular), 1.0);
 }

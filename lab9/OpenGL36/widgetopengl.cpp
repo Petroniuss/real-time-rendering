@@ -603,6 +603,27 @@ int factorial(int n, int k) {
 }
 
 
+int** pascal(int n) {
+    int** arr = new int*[n];
+    for (int i = 0; i < n; i++) {
+        arr[i] = new int[n];
+    }
+
+    for (int line = 0; line < n; line++) {
+        for (int i = 0; i <= line; i++) {
+            if (line == i || i == 0) {
+                arr[line][i] = 1;
+            }
+            else {
+                arr[line][i] = arr[line - 1][i - 1] + arr[line - 1][i];
+            }
+        }
+    }
+
+    return arr;
+}
+
+
 void WidgetOpenGL::paintFilter(GLuint textureIn, GLboolean horizontal)
 {
     // czyscimy ekran i bufor glebokosci
@@ -624,15 +645,28 @@ void WidgetOpenGL::paintFilter(GLuint textureIn, GLboolean horizontal)
     int attr_w_size = getUniformLocation(shaderProgram_Filter, "w_size");
     glUniform1i(attr_w_size, w_size);
 
-
-    int R = 6;
+    int R = 4;
     int n = 12;
 
+    qDebug() << "n, R" << n << " " << R << "\n";
+
+    int** pascal_array = pascal(n + 1);
+
+
     int row[n + 1];
+    qDebug() << "row[i] ";
     for (int i = 0; i <= n; i++) {
         int k = i;
         row[i] = factorial(n, k);
+        row[i] = pascal_array[n][i];
+//        qDebug() << row[i] << " ";
+//        qDebug() << pascal_array[n][i] << " ";
     }
+//    qDebug() << "\n";
+    for (int i = 0; i <= n; i++) {
+        free(pascal_array[i]);
+    }
+    free(pascal_array);
 
     int middle = n / 2;
     int sum = row[middle];
