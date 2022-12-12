@@ -358,11 +358,14 @@ void WidgetOpenGL::initializeGL()
 //        glCullFace(GL_BACK);
 
         glEnable(GL_BLEND);
+
+//        glBlendEquation(GL_FUNC_ADD);
+        glBlendFunc(GL_SRC_ALPHA,  GL_ONE_MINUS_SRC_ALPHA);
+//        glBlendFunc(GL_SRC_ALPHA,  GL_SRC_ALPHA);
         glBlendEquation(GL_FUNC_ADD);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 
         v_transform(20, 0, 0, 1);
-
         init_ok = true;
     }
     catch (QString msg)

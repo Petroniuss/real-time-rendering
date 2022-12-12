@@ -81,7 +81,7 @@ void main()
     vec3 specular = specular_strength*pow(max(dot(viewDir, reflDir), 0.0), material.shininess)*light.color*material.specular;
 
     if (int(gl_FragCoord.x) >= slider)
-      color = vec4(ambient + shadow*(diffuse + specular), texColor.a);
+      color = vec4(ambient + shadow*(diffuse + specular), 1.0 - texColor.a);
     else
       color = vec4(ambient + shadow*(diffuse + specular), 1.0);
 }
