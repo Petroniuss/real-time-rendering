@@ -3,17 +3,17 @@
 
 #include <QOpenGLWidget>
 #include <QOpenGLFunctions_1_0>
-#include <QOpenGLFunctions_4_5_Core>
+#include <QOpenGLFunctions_4_1_Core>
 #include <QMatrix4x4>
 
 #include "light.h"
 #include "material.h"
 
 
-#define MIN_OPENGL_VERSION "4.5"
+#define MIN_OPENGL_VERSION "4.1"
 
 
-class OpenGLVersionTest: public QOpenGLFunctions_1_0
+class OpenGLVersionTest: public QOpenGLFunctions_4_1_Core
 {
 public:
     QString version()
@@ -24,7 +24,7 @@ public:
 };
 
 
-class WidgetOpenGL: public QOpenGLWidget, public QOpenGLFunctions_4_5_Core
+class WidgetOpenGL: public QOpenGLWidget, public QOpenGLFunctions_4_1_Core
 {
 public:
     WidgetOpenGL(QWidget *parent = 0): QOpenGLWidget(parent), slider(0) 
@@ -67,7 +67,7 @@ protected:
     float f_rand(float min, float max);
 
     void makeShadowMatrix();
-    void paintScene(boolean gen_shadow_map, boolean paint_transparents);
+    void paintScene(GLboolean gen_shadow_map, GLboolean paint_transparents);
 };
 
 

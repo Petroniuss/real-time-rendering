@@ -197,23 +197,23 @@ void WidgetOpenGL::initializeGL()
         ////////////////////////////////////////////////////////////////
 
         Model model;
-        model.readFile("../Modele/" MODEL, true, true, 0.2);
+        model.readFile("../../models-obj/" MODEL, true, true, 0.2);
         triangles_cnt = model.getVertDataCount();
 
         Model model_transparent;
-        model_transparent.readFile("../Modele/" MODEL_TRANS, true, true, 0.2);
+        model_transparent.readFile("../../models-obj/" MODEL_TRANS, true, true, 0.2);
         triangles_transparent_cnt = model_transparent.getVertDataCount();
 
         Model model_floor;
-        model_floor.readFile("../Modele/" MODEL_FLOOR, true, true, 0.8);
+        model_floor.readFile("../../models-obj/" MODEL_FLOOR, true, true, 0.8);
         triangles_floor_cnt = model_floor.getVertDataCount();
 
         ////////////////////////////////////////////////////////////////
         // Wczytanie tekstur
         ////////////////////////////////////////////////////////////////
 
-        TEX = loadTexture2D("../Modele/" TEXTURE, GL_CLAMP_TO_EDGE);
-        TEX_floor = loadTexture2D("../Modele/" TEXTURE_FLOOR, GL_REPEAT);
+        TEX = loadTexture2D("../../Modele/" TEXTURE, GL_CLAMP_TO_EDGE);
+        TEX_floor = loadTexture2D("../../Modele/" TEXTURE_FLOOR, GL_REPEAT);
 
 
         ////////////////////////////////////////////////////////////////
@@ -412,7 +412,7 @@ void WidgetOpenGL::paintGL()
 }
 
 
-void WidgetOpenGL::paintScene(boolean gen_shadow_map, boolean paint_transparents)
+void WidgetOpenGL::paintScene(GLboolean gen_shadow_map, GLboolean paint_transparents)
 {
     GLuint prog = gen_shadow_map ? shaderProgramShadow : shaderProgram;
 
